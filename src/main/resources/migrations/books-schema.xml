@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="tyler.hoersch" id="books-schema">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="books" />
+            </not>
+        </preConditions>
+
+        <createTable tableName="books">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_book"/>
+            </column>
+
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="author" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="publisher" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="isbn" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="publication_date" type="DATE"/>
+
+            <column defaultValueComputed="now()" name="created" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="TIMESTAMP"/>
+        </createTable>
+
+        <addUniqueConstraint tableName="books" columnNames="isbn" constraintName="uq_books__isbn" deferrable="false" disabled="false" initiallyDeferred="false"/>
+    </changeSet>
+</databaseChangeLog>

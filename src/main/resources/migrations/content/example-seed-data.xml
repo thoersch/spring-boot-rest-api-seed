@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="tyler.hoersch" id="example-seed-data">
+
+        <!-- Example Users -->
+        <insert schemaName="public" tableName="users">
+            <column name="first_name" value="Tyler"/>
+            <column name="last_name" value="Hoersch"/>
+            <column name="email_address" value="thoersch@gmail.com"/>
+            <column name="profile_picture" value="http://www.gravatar.com/avatar/327b0fc14f66878633ee3633a36d4889.png"/>
+        </insert>
+
+        <insert schemaName="public" tableName="users">
+            <column name="first_name" value="Frank"/>
+            <column name="last_name" value="Underwood"/>
+            <column name="email_address" value="frank.underwood@netflix.com"/>
+            <column name="profile_picture" value="https://pbs.twimg.com/profile_images/3762026736/1ccf6ffc12fbe7339dfd3e9fa048f17c_normal.jpeg"/>
+        </insert>
+
+        <!-- Example Books -->
+        <insert schemaName="public" tableName="books">
+            <column name="title" value="The Art of Computer Programming"/>
+            <column name="author" value="Donald Knuth"/>
+            <column name="publisher" value="Addison-Wesley Professional"/>
+            <column name="isbn" value="978-0321751041"/>
+            <column name="publication_date" valueDate="2011-03-03"/>
+        </insert>
+
+        <insert schemaName="public" tableName="books">
+            <column name="title" value="Clean Code: A Handbook of Agile Software Craftsmanship"/>
+            <column name="author" value="Robert C. Martin"/>
+            <column name="publisher" value="Prentice Hall"/>
+            <column name="isbn" value="978-0132350884"/>
+            <column name="publication_date" valueDate="2008-08-11"/>
+        </insert>
+
+        <sql>insert into users_books (user_id, book_id)
+             values ((select id from users where email_address='thoersch@gmail.com'),
+                     (select id from books where isbn='978-0132350884'))</sql>
+    </changeSet>
+</databaseChangeLog>

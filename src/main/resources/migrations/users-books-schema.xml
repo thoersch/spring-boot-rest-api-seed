@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="tyler.hoersch" id="users-books-schema">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="users_books" />
+            </not>
+        </preConditions>
+
+        <createTable tableName="users_books">
+            <column autoIncrement="true" name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user_book"/>
+            </column>
+
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="book_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column defaultValueComputed="now()" name="created" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="users_books" baseTableSchemaName="public" constraintName="fk_users_books__books" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books" referencedTableSchemaName="public" referencesUniqueColumn="false"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_books" baseTableSchemaName="public" constraintName="fk_users_books__users" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" referencedTableSchemaName="public" referencesUniqueColumn="false"/>
+
+        <addUniqueConstraint tableName="users_books" columnNames="user_id, book_id" constraintName="uq_users_books__user_id_book_id" deferrable="false" disabled="false" initiallyDeferred="false"/>
+    </changeSet>
+</databaseChangeLog>
