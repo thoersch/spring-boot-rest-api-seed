@@ -8,6 +8,10 @@ This is a seed and example project for building a RESTful API using the followin
 * Hibernate
 * Jackson
 * Spring DI
+* Postgresql
+
+## Install Postgresql
+The seed project is using PostgreSQL 9.3+ and can be installed quite easily on mac, linux or windows following a [guide](https://www.codefellows.org/blog/three-battle-tested-ways-to-install-postgresql)
 
 ## Create the database user
 
